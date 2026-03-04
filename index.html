@@ -55,9 +55,9 @@ The template is structured for research papers but can be adapted for any projec
   <div id="content" style="display:block;">
     <!-- HERO -->
     <header class="full-page-image" id="hero">
-      <video id="bg-video" preload="metadata" poster="assets/img/cover.png" autoplay muted playsinline loop>
+      <video id="bg-video" preload="metadata" poster="assets/img/0.jpg" autoplay muted playsinline loop>
         <!-- Replace with your project hero video -->
-        <source src="assets/mp4/hero_video.mp4" type="video/mp4" />
+        <source src="assets/mp4/sample.mp4" type="video/mp4" />
       </video>
       <div class="overlay"></div>
       <div class="bottom-overlay" style="padding:0 24px;">
@@ -78,12 +78,10 @@ Robot Learning</span></h1>
 Robot Learning</div>
 
       <div class="authors">
-        <a href="https://jiahui-fu.github.io/" target="_blank">Jiahui
-          Fu</a><sup>*1</sup>,
-        <a href="https://scholar.google.com/citations?user=Cvn7Y5YAAAAJ&hl=en" target="_blank">Junyu
-          Nan</a><sup>*1,2</sup>,
-        <a href="https://lingfeng.moe/" target="_blank">Lingfeng Sun</a><sup>*1</sup>,
-        <a href="https://lhy.xyz/" target="_blank">Hongyu Li</a><sup>*1,3</sup>,
+        <a href="https://jiahui-fu.github.io/" target="_blank">Yinan Deng</a><sup>1</sup>,
+        <a href="https://scholar.google.com/citations?user=Cvn7Y5YAAAAJ&hl=en" target="_blank">Kejia Hu</a><sup>2</sup>,
+        <a href="https://lingfeng.moe/" target="_blank">Ye Chen</a><sup>3</sup>,
+        <a href="https://lhy.xyz/" target="_blank">Jianyu Dou</a><sup>4</sup>,
         <a href="https://scholar.google.com/citations?user=o67NTxYAAAAJ&hl=en" target="_blank">Jianing
           Qian</a><sup>4</sup>,
         <a href="https://www.linkedin.com/in/jennifer-barry-742a0799/" target="_blank">Jennifer Barry</a><sup>1</sup>,
@@ -116,29 +114,45 @@ Robot Learning</div>
       <div class="tagline" id="abstract">Research Highlights</div>
       <div class="section">
         <p>
-          Solving long-horizon manipulation tasks requires integrating high-level semantic reasoning with
-          physically grounded low-level control. We introduce <b>NovaPlan</b>, a hierarchical framework for
-          <b>zero-shot long-horizon manipulation</b> that unifies <b>closed-loop video language planning</b>
-          with <b>geometrically grounded robot execution</b>, with no prior demonstrations or task-specific training
-          required.
+          Generating scalable embodied data without expensive hardware remains a central challenge for robot learning.
+          We introduce <b>Video2Robo</b>, a framework for <b>monocular video-to-robot data generation</b> that converts
+          a single human demonstration video into <b>photorealistic, kinematically plausible robot training data</b>.
+          By leveraging <b>3D Gaussian Splatting (3DGS)</b> for explicit scene reconstruction and editable rendering,
+          Video2Robo extracts task-relevant object trajectories and synthesizes diverse robot–object interactions,
+          enabling effective policy learning and seamless transfer to real-world robots without teleoperation,
+          simulators, or depth sensors.
         </p>
         <ul style="text-align: left; line-height: 1.8; margin-top: 10px;">
-          <li><b>Closed-Loop Video Language Planner:</b> A VLM planner decomposes tasks into <b>multi-step</b>
-            sub-goals, and a video generation model synthesizes task-solving videos as visual plans for
-            robot action extraction. The system monitors execution in a closed loop, enabling recovery from
-            single-step failures through autonomous re-planning.
+          <li>
+            <b>Monocular 6D Object Understanding:</b>
+            An optimized 3DGS-rendering-based pose estimation method reconstructs task-relevant objects
+            and tracks <b>temporally consistent 6D trajectories</b> from raw RGB videos, enabling skill extraction
+            from relative object motion without embodied sensing.
           </li>
-          <li><b>Dual-Flow Action Extraction:</b> To compute low-level robot actions, the system extracts
-            <b>object flow</b> (task-relevant 3D object keypoint tracking) and <b>hand flow</b> (human hand pose
-            estimation) from generated videos, and employs a switching mechanism to select the better flow reference,
-            maintaining stable execution even under heavy occlusion or depth inaccuracy.
+          <li>
+            <b>Photorealistic & Editable 3DGS Rendering:</b>
+            The framework leverages <b>explicit Gaussian scene editing</b> to ensure high-fidelity rendering,
+            physically plausible robot–object coordination, and elimination of simulator-induced artifacts.
           </li>
-          <li><b>Strong Zero-Shot Performance:</b> NovaPlan achieves strong zero-shot performance on diverse
-            long-horizon tasks and the Functional Manipulation Benchmark (FMB), solving complex multi-step assembly
-            tasks and performing non-prehensile error recovery via hand poking, all without any prior training.
+          <li>
+            <b>Coupled Robot–Object Motion Synthesis:</b>
+            Extracted object trajectories are transformed into <b>kinematically feasible robot actions</b>
+            via coordinated motion design, preserving task semantics under novel object arrangements.
+          </li>
+          <li>
+            <b>Comprehensive Scene Augmentation:</b>
+            Video2Robo enhances generalization through <b>pose, appearance, lighting, background, and view augmentation</b>
+            within a unified 3D representation, significantly increasing embodied data diversity.
+          </li>
+          <li>
+            <b>Strong Generalization & Sim-to-Real Transfer:</b>
+            Policies trained purely on Video2Robo-generated data achieve superior generalization across
+            object configurations and camera viewpoints, and transfer effectively to physical robot platforms.
           </li>
         </ul>
       </div>
+
+
 
       <div class="tagline" id="interactive-viewer">Interactive Viewer: Object and Hand Flows</div>
       <!-- TODO: add starting image + generated video + execution video -->
