@@ -57,7 +57,7 @@ The template is structured for research papers but can be adapted for any projec
     <header class="full-page-image" id="hero">
       <video id="bg-video" preload="metadata" poster="assets/img/cover.png" autoplay muted playsinline loop>
         <!-- Replace with your project hero video -->
-        <source src="assets/mp4/hero_video.mp4" type="video/mp4" />
+        <source src="assets/mp4/cover.mp4" type="video/mp4" />
       </video>
       <div class="overlay"></div>
       <div class="bottom-overlay" style="padding:0 24px;">
@@ -76,36 +76,35 @@ The template is structured for research papers but can be adapted for any projec
       <!-- <div class="hero-text">Versatile Loco-Manipulation through Flexible Interlimb Coordination</div> -->
 
       <div class="sub-hero-text">
-      Video2Robo: Zero-Shot Long-Horizon Manipulation
-      via Closed-Loop Video Language Planning
+      Video2Robo: 3DGS-based Synthetic Data from One Video Enables Scalable Robot Learning <br>
+      CVPR 2026
       </div>
 
       <div class="authors">
-        <a href="https://jiahui-fu.github.io/" target="_blank">Jiahui
-          Fu</a><sup>*1</sup>,
-        <a href="https://scholar.google.com/citations?user=Cvn7Y5YAAAAJ&hl=en" target="_blank">Junyu
-          Nan</a><sup>*1,2</sup>,
-        <a href="https://lingfeng.moe/" target="_blank">Lingfeng Sun</a><sup>*1</sup>,
-        <a href="https://lhy.xyz/" target="_blank">Hongyu Li</a><sup>*1,3</sup>,
-        <a href="https://scholar.google.com/citations?user=o67NTxYAAAAJ&hl=en" target="_blank">Jianing
-          Qian</a><sup>4</sup>,
-        <a href="https://www.linkedin.com/in/jennifer-barry-742a0799/" target="_blank">Jennifer Barry</a><sup>1</sup>,
-        <a href="https://kriskitani.github.io/" target="_blank">Kris Kitani</a><sup>2</sup>,
-        <a href="https://cs.brown.edu/people/gdk/" target="_blank">George Konidaris</a><sup>3</sup>
-        <div class="affiliation"><sup>1</sup>Robotics and AI Institute&nbsp;&nbsp;&nbsp;<sup>2</sup>Carnegie Mellon
-          University&nbsp;&nbsp;&nbsp;<sup>3</sup>Brown University&nbsp;&nbsp;&nbsp;<sup>4</sup>University of
-          Pennsylvania</div><br />
-        <div class="equal-contribution"><i>*Equal contribution</i></div>
+        <a href="https://bit-dyn.github.io/" target="_blank">Yinan Deng</a><sup>1</sup>,
+        <a target="_blank"> Kejia Hu</a><sup>1</sup>,
+        <a target="_blank">Ye Chen</a><sup>1</sup>,
+        <a target="_blank"> Jianyu Dou</a><sup>1</sup>,
+        <a target="_blank">Jiahui Wang</a><sup>1</sup>,
+        <a target="_blank"> Jingyu Zhao</a><sup>1</sup>,
+        <a target="_blank">Haojia Ao</a><sup>1</sup>,
+        <a target="_blank">Yi Yang</a><sup>1</sup>,
+        <a href="https://yfyue-bit.github.io/" target="_blank">Yufeng Yue</a><sup>1*</sup>,
+        
+        <div class="affiliation"><sup>1</sup>The School of Automation, Beijing Institute of Technology&nbsp;&nbsp;&nbsp;</div><br />
       </div>
 
+      
+
+
       <div class="quick-links">
-        <a href="https://arxiv.org/abs/2602.20119" target="_blank">[arXiv]</a>
+        <!-- <a href="https://arxiv.org/abs/xxxx" target="_blank">[arXiv]</a> -->
         <a href="#" onclick="return false;">[code (coming soon)]</a>
       </div>
 
       <div class="section" id="intro-video-section"
         style="text-align: center; position: relative; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 8px; background: white;">
-        <video id="intro-video" src="assets/mp4/webpage_video.mp4" controls autoplay muted playsinline loop
+        <video id="intro-video" src="assets/mp4/video2robo.mp4" controls autoplay muted playsinline loop
           style="width: 100%; display: block; background: white; object-fit: contain;"></video>
 
         <!-- Audio Indicator -->
@@ -157,73 +156,77 @@ The template is structured for research papers but can be adapted for any projec
         </ul>
       </div>
 
-      <div class="tagline" id="interactive-viewer">Interactive Viewer: Object and Hand Flows</div>
+      <div class="tagline" id="interactive-viewer">Interactive Viewer: 6D Pose Estimation and Demos</div>
       <!-- TODO: add starting image + generated video + execution video -->
       <div class="section">
         <div class="task-selector" id="task-buttons">
-          <button type="button" class="task-button active" data-value="step_1">Attach</button>
-          <button type="button" class="task-button" data-value="step_2">Step 2</button>
-          <button type="button" class="task-button" data-value="step_3">Step 3</button>
-          <button type="button" class="task-button" data-value="step_4">Step 4</button>
-          <button type="button" class="task-button" data-value="step_4_recovery">Step 4<br>Recovery</button>
+          <button type="button" class="task-button active" data-value="Attach">Attach</button>
+          <button type="button" class="task-button" data-value="Drum">Drum</button>
+          <!-- <button type="button" class="task-button" data-value="step_3">Place</button>
+          <button type="button" class="task-button" data-value="step_4">Pour</button>
+          <button type="button" class="task-button" data-value="step_4">Stack</button>
+          <button type="button" class="task-button" data-value="step_4">Sweep</button> -->
         </div>
         <div class="viewer-container">
+          <div class="media-column">
+            <!-- <div class="media-item">
+              <p>Initial Observation</p>
+              <img id="initial-observation" alt="Initial Observation">
+            </div> -->
+            <div class="media-item">
+              <p>Input Human Video</p>
+              <video id="input-video" controls autoplay muted playsinline loop></video>
+            </div>
+            <div class="media-item">
+              <p>2D Pose Estimation Video</p>
+              <video id="pose-video" controls autoplay muted playsinline loop></video>
+            </div>
+            <!-- <div class="media-item">
+              <p>Input Human Video</p>
+              <video id="generated-video" controls autoplay muted playsinline loop></video>
+              <div id="interactive-view-toggle" class="view-toggle" style="display: none;">
+                <button class="active" onclick="switchInteractiveView('front')">Front View</button>
+                <button onclick="switchInteractiveView('side')">Side View</button>
+              </div>
+            </div> -->
+          </div>
           <div class="viewer-main">
             <div class="trajectory-selector">
-              <label for="trajectory-type">Flow Options:</label>
+              <label for="trajectory-type">3D Viewer Options:</label>
               <select id="trajectory-type">
                 <option value="object">Object Flow</option>
                 <option value="hand">Hand Flow</option>
               </select>
             </div>
-            <p class="figure-caption" style="margin-bottom: 8px; text-align: center;">
+            <!-- <p class="figure-caption" style="margin-bottom: 8px; text-align: center;">
               3D Point Cloud &amp; <span id="flow-type-label">Actionable Object Flow</span> from Generated Video
-            </p>
+            </p> -->
             <iframe id="task-viewer" style="display: block; width: 100%; height: 500px; border: none;"></iframe>
-            <p class="figure-caption" style="text-align: left;">
+            <!-- <p class="figure-caption" style="text-align: left;">
               <b>Note:</b> The visualized end-effector is offset from the physical one due to longer gripper fingers
               used in real-world experiments.
-            </p>
-          </div>
-          <div class="media-column">
-            <div class="media-item">
-              <p>Initial Observation</p>
-              <img id="initial-observation" alt="Initial Observation">
-            </div>
-            <div class="media-item">
-              <p>Generated Video</p>
-              <video id="generated-video" controls autoplay muted playsinline loop></video>
-            </div>
-            <div class="media-item">
-              <p>Execution Video (1x speed)</p>
-              <video id="execution-video" controls autoplay muted playsinline loop></video>
-              <div id="interactive-view-toggle" class="view-toggle" style="display: none;">
-                <button class="active" onclick="switchInteractiveView('front')">Front View</button>
-                <button onclick="switchInteractiveView('side')">Side View</button>
-              </div>
-            </div>
+            </p> -->
           </div>
         </div>
       </div>
 
       <div class="tagline" id="methods">Methods</div>
-      <!-- TODO: use ppt do a gif -->
       <div class="section">
-        <video src="assets/mp4/method_gif.mp4" style="width: 90%; display: block; margin: 20px auto 10px auto;" autoplay
-          muted playsinline loop></video>
+        <img src="assets/mp4/method.gif" style="width: 90%; display: block; margin: 20px auto 10px auto;" autoplay
+          muted playsinline loop>
         <p class="figure-caption">
-          The full NovaPlan pipeline consists of a <b>high-level planning system</b> and a <b>low-level execution
-            system</b>. <br><br>
-          <b>High-level Planning System:</b> A high-level planner takes in the task instruction and current observation,
-          and proposes multiple task-solving videos after VLM reasoning about the task progress. Videos are selected
-          based on flow and semantic consistency. The low-level planner calculates the robot action from the extracted
-          object or hand flow. Updated observations are sent to a VLM critic to determine whether the robot should
-          proceed to the next step or recover from failure.
-          <br><br>
-          <b>Low-level Execution System:</b> Given the generated video plan (RGB+Depth), we switch between grounding the
-          target object, tracking 3D keypoints, and recovering object flow, or estimating the hand pose with HaMeR,
-          calibrating 3D scale, and computing the hand flow. The resulting object/hand flows are converted into robot
-          actions for on-robot execution, with a video language planner enabling closed-loop re-planning and recovery.
+          Video2Robo takes one monocular human demonstration video as input, and the synthesized data can be directly
+           utilized for training and deploying robot imitation learning policies.
+          The overall framework of Video2Robo comprises three main components:
+          <br>
+          <b>Scene and Skill Parsing</b> performs Real2Sim functionality by extracting 3D object motion from 
+          the video and segmenting task skills.
+          <br>
+          <b>Scalable Data Generation</b> automatically synthesizes diverse robot demonstrations across varying
+          scene configurations based on 3DGS representations.
+          <br>
+          <b>Robot Learning and Deployment</b> performs Sim2Real functionality by training visuomotor policies
+          and deploying them for evaluation in both simulation and real-world environments.
         </p>
       </div>
 

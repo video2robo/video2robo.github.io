@@ -1,56 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
   const taskButtonsContainer = document.getElementById('task-buttons');
   const taskViewer = document.getElementById('task-viewer');
-  const initialObservationImg = document.getElementById('initial-observation');
-  const generatedVideo = document.getElementById('generated-video');
-  const executionVideo = document.getElementById('execution-video');
+  // const initialObservationImg = document.getElementById('initial-observation');
+  const inputVideo = document.getElementById('input-video');
+  const poseVideo = document.getElementById('pose-video');
+  // const executionVideo = document.getElementById('execution-video');
   const trajectorySelect = document.getElementById('trajectory-type');
 
   // Per-step configuration
   // Viser viewers are self-contained in assets/viser-client/assets/fmb_fake_viser/stepN/
   const viserBase = 'assets/viser-client/assets/fmb_fake_viser';
   const stepConfig = {
-    step_1: {
-      assetsDir: 'assets/mp4/fmb_fake/step_1',
-      startImg: 'start.png',
-      genVideo: 'rgb_video_16fps_1.mp4',
-      execVideo: 'camera0_1.mp4',
-      viserObject: `${viserBase}/step1/viewer/index.html`,
-      viserHand: `${viserBase}/step1/viewer_hand/index.html`,
+    Attach: {
+      assetsDir: 'assets/mp4/attach',
+      inputVideo: '0__attach.mp4',
+      poseVideo: 'obj_all.mp4',
+      viserObject: `${viserBase}/Attach/viewer/index.html`,
+      viserHand: `${viserBase}/Attach/viewer_hand/index.html`,
     },
-    step_2: {
-      assetsDir: 'assets/mp4/fmb_fake/step_2',
-      startImg: 'start.png',
-      genVideo: 'rgb_video_16fps_2.mp4',
-      execVideo: 'camera0_2.mp4',
-      viserObject: `${viserBase}/step2/viewer/index.html`,
-      viserHand: `${viserBase}/step2/viewer_hand/index.html`,
-    },
-    step_3: {
-      assetsDir: 'assets/mp4/fmb_fake/step_3',
-      startImg: 'start.png',
-      genVideo: 'rgb_video_16fps_3.mp4',
-      execVideo: 'camera0_3.mp4',
-      viserObject: `${viserBase}/step3/viewer/index.html`,
-      viserHand: `${viserBase}/step3/viewer_hand/index.html`,
-    },
-    step_4: {
-      assetsDir: 'assets/mp4/fmb_fake/step_4',
-      startImg: 'start.png',
-      genVideo: 'rgb_video_16fps_4.mp4',
-      execVideo: 'camera0_4.mp4',
-      viserObject: `${viserBase}/step4/viewer/index.html`,
-      viserHand: `${viserBase}/step4/viewer_hand/index.html`,
-    },
-    step_4_recovery: {
-      assetsDir: 'assets/mp4/fmb_fake/step_4_recovery',
-      startImg: 'start_clean.png',
-      genVideo: 'rgb_video_16fps_4_recovery.mp4',
-      execVideo: 'execution_front_view.mp4',
-      execVideoSide: 'execution_side_view.mp4',
-      // step_4_recovery only has hand flow, no object flow
-      viserObject: `${viserBase}/step4_recovery/viewer_hand/index.html`,
-      viserHand: `${viserBase}/step4_recovery/viewer_hand/index.html`,
+    Drum: {
+      assetsDir: 'assets/mp4/drum',
+      inputVideo: '0__drum.mp4',
+      poseVideo: 'obj_all.mp4',
+      viserObject: `${viserBase}/Drum/viewer/index.html`,
+      viserHand: `${viserBase}/Drum/viewer_hand/index.html`,
     },
   };
 
@@ -82,9 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const trajectory = trajectorySelect.value;
 
     // Update media sources
-    initialObservationImg.src = `${config.assetsDir}/${config.startImg}`;
-    generatedVideo.src = `${config.assetsDir}/${config.genVideo}`;
-    executionVideo.src = `${config.assetsDir}/${config.execVideo}`;
+    // initialObservationImg.src = `${config.assetsDir}/${config.startImg}`;
+    inputVideo.src = `${config.assetsDir}/${config.inputVideo}`;
+    poseVideo.src = `${config.assetsDir}/${config.poseVideo}`;
+    // executionVideo.src = `${config.assetsDir}/${config.execVideo}`;
 
     // Update viser iframe
     taskViewer.src = buildSrc(step, trajectory);
@@ -145,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Interactive Viewer Switch Function (Global)
 window.switchInteractiveView = function (viewType) {
-  const video = document.getElementById('execution-video');
+  // const video = document.getElementById('execution-video');
   const toggleContainer = document.getElementById('interactive-view-toggle');
 
   if (!video || !toggleContainer) return;

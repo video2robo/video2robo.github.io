@@ -434,12 +434,12 @@ img {
 }
 
 #task-viewer {
-  flex: 3;
+  flex: 2;
   /* Takes up 3/4 of the space */
 }
 
 .viewer-main {
-  flex: 3;
+  flex: 2;
   display: flex;
   flex-direction: column;
 }
@@ -461,13 +461,13 @@ img {
 }
 
 .media-column {
-  flex: 1;
+  flex: 2;
   /* Takes up 1/4 of the space */
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: stretch;
-  max-width: 25%;
+  max-width: 33%;
 }
 
 .media-item {
