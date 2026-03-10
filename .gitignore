@@ -10,9 +10,9 @@ venv/
 .env
 .ipynb_checkpoints
 
-mp4/
-attach/
-step2/
-step3/
-step4/
-step4_recovery/
+# mp4/
+# attach/
+# step2/
+# step3/
+# step4/
+# step4_recovery/
