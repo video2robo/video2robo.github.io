@@ -51,6 +51,29 @@ function setFlowType(expId, flowType) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  // 隐藏所有 experiment-content
+  document.querySelectorAll('.experiment-content').forEach(div => {
+    div.style.display = 'none';
+    div.classList.remove('active');
+  });
+  // 找到 active tab
+  const activeTab = document.querySelector('.exp-tab.active');
+  if (activeTab) {
+    // 解析出对应的 experiment-content id
+    const onclick = activeTab.getAttribute('onclick');
+    const match = onclick && onclick.match(/'([^']+)'/);
+    if (match) {
+      const id = match[1];
+      const div = document.getElementById(id);
+      if (div) {
+        div.style.display = 'block';
+        div.classList.add('active');
+      }
+    }
+  }
+});
+
 // Global Flow Toggle - applies to all experiments at once
 function setGlobalFlowType(flowType) {
     // 1. Apply to all experiment containers

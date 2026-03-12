@@ -16,14 +16,42 @@ document.addEventListener('DOMContentLoaded', function () {
       inputVideo: '0__attach.mp4',
       poseVideo: 'obj_all.mp4',
       viserObject: `${viserBase}/Attach/viewer/index.html`,
-      viserHand: `${viserBase}/Attach/viewer_hand/index.html`,
+      viserDemo: `${viserBase}/Attach/viewer_demo/index.html`,
     },
     Drum: {
       assetsDir: 'assets/mp4/drum',
       inputVideo: '0__drum.mp4',
       poseVideo: 'obj_all.mp4',
-      viserObject: `${viserBase}/Drum/viewer/index.html`,
-      viserHand: `${viserBase}/Drum/viewer_hand/index.html`,
+        viserObject: `${viserBase}/Drum/viewer/index.html`,
+        viserDemo: `${viserBase}/Drum/viewer_demo/index.html`,
+    },
+    Place: {
+      assetsDir: 'assets/mp4/place',
+      inputVideo: '0__place.mp4',
+      poseVideo: 'obj_all.mp4',
+      viserObject: `${viserBase}/Place/viewer/index.html`,
+      viserDemo: `${viserBase}/Place/viewer_demo/index.html`,
+    },
+    Pour: {
+      assetsDir: 'assets/mp4/pour',
+      inputVideo: '0__pour.mp4',
+      poseVideo: 'obj_all.mp4',
+      viserObject: `${viserBase}/Pour/viewer/index.html`,
+      viserDemo: `${viserBase}/Pour/viewer_demo/index.html`,
+    },
+    Stack: {
+      assetsDir: 'assets/mp4/stack',
+      inputVideo: '0__stack.mp4',
+      poseVideo: 'obj_all.mp4',
+      viserObject: `${viserBase}/Stack/viewer/index.html`,
+      viserDemo: `${viserBase}/Stack/viewer_demo/index.html`,
+    },
+    Sweep: {
+      assetsDir: 'assets/mp4/sweep',
+      inputVideo: '0__sweep.mp4',
+      poseVideo: 'obj_all.mp4',
+      viserObject: `${viserBase}/Sweep/viewer/index.html`,
+      viserDemo: `${viserBase}/Sweep/viewer_demo/index.html`,
     },
   };
 
@@ -32,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const config = stepConfig[step];
     if (!config) return '';
     // Each step has its own self-contained viser viewer
-    return trajectory === 'hand' ? config.viserHand : config.viserObject;
+    return trajectory === 'demo' ? config.viserDemo : config.viserObject;
   };
 
   // Currently active step
@@ -47,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const objectFlowOption = trajectorySelect.querySelector('option[value="object"]');
     if (step === 'step_4_recovery') {
       if (objectFlowOption) objectFlowOption.style.display = 'none';
-      trajectorySelect.value = 'hand';
+      trajectorySelect.value = 'demo';
     } else {
       if (objectFlowOption) objectFlowOption.style.display = '';
     }
@@ -77,9 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update the caption label
     const flowLabel = document.getElementById('flow-type-label');
     if (flowLabel) {
-      flowLabel.textContent = trajectorySelect.value === 'hand'
-        ? 'Actionable Hand Flow'
-        : 'Actionable Object Flow';
+      flowLabel.textContent = trajectorySelect.value === 'demo'
+        ? 'Clean Robot Demo'
+        : 'Object 6D Pose';
     }
   };
 
@@ -103,9 +131,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update the caption label
     const flowLabel = document.getElementById('flow-type-label');
     if (flowLabel) {
-      flowLabel.textContent = trajectory === 'hand'
-        ? 'Actionable Hand Flow'
-        : 'Actionable Object Flow';
+      flowLabel.textContent = trajectory === 'demo'
+        ? 'Clean Robot Demo'
+        : 'Object 6D Pose';
     }
   });
 

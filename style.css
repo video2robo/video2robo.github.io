@@ -603,40 +603,53 @@ img {
 }
 
 /* Trajectory Selector Styles */
+
 .trajectory-selector {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 10px;
+  padding: 16px 20px;
+  /* background: #fffbe8;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(255, 179, 0, 0.10), 0 1.5px 6px rgba(0,0,0,0.08); */
 }
 
 .trajectory-selector label {
   font-family: 'Roboto Mono', monospace;
-  font-size: 14px;
-  color: #333;
+  font-size: 20px;
+  color: #d17b00;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 .trajectory-selector select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23333'/%3E%3C/svg%3E") no-repeat right 10px center;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 6px 30px 6px 12px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Cpath d='M0 0l8 10 8-10z' fill='%23d17b00'/%3E%3C/svg%3E") no-repeat right 18px center;
+  border: 2px solid #ffb300;
+  border-radius: 8px;
+  padding: 12px 44px 12px 20px;
   font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #d17b00;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(255, 179, 0, 0.08);
 }
 
 .trajectory-selector select:hover {
-  border-color: #888;
+  border-color: #ff9800;
+  box-shadow: 0 0 0 2px #ffe0a3;
 }
 
 .trajectory-selector select:focus {
   outline: none;
-  border-color: #000;
+  border-color: #d17b00;
+  box-shadow: 0 0 0 3px #ffe0a3;
 }
 
 /* Experiment Gallery Styles */
@@ -653,6 +666,13 @@ img {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+.experiment-content {
+  display: none;
+}
+.experiment-content.active {
+  display: block;
 }
 
 .experiment-tabs button.exp-tab:hover {

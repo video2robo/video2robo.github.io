@@ -104,7 +104,7 @@ The template is structured for research papers but can be adapted for any projec
 
       <div class="section" id="intro-video-section"
         style="text-align: center; position: relative; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 8px; background: white;">
-        <video id="intro-video" src="assets/mp4/Video2Robo.mp4" controls autoplay muted playsinline loop
+        <video id="intro-video" src="assets/mp4/Video2Robo.mp4" controls muted playsinline loop
           style="width: 100%; display: block; background: white; object-fit: contain;"></video>
 
         <!-- Audio Indicator -->
@@ -160,12 +160,12 @@ The template is structured for research papers but can be adapted for any projec
       <!-- TODO: add starting image + generated video + execution video -->
       <div class="section">
         <div class="task-selector" id="task-buttons">
-          <button type="button" class="task-button active" data-value="Attach">Attach</button>
+          <button type="button" class="task-button" data-value="Attach">Attach</button>
           <button type="button" class="task-button" data-value="Drum">Drum</button>
-          <!-- <button type="button" class="task-button" data-value="step_3">Place</button>
-          <button type="button" class="task-button" data-value="step_4">Pour</button>
-          <button type="button" class="task-button" data-value="step_4">Stack</button>
-          <button type="button" class="task-button" data-value="step_4">Sweep</button> -->
+          <button type="button" class="task-button" data-value="Place">Place</button>
+          <button type="button" class="task-button active" data-value="Pour">Pour</button>
+          <button type="button" class="task-button" data-value="Stack">Stack</button>
+          <button type="button" class="task-button" data-value="Sweep">Sweep</button>
         </div>
         <div class="viewer-container">
           <div class="media-column">
@@ -178,7 +178,7 @@ The template is structured for research papers but can be adapted for any projec
               <video id="input-video" controls autoplay muted playsinline loop></video>
             </div>
             <div class="media-item">
-              <p>2D Pose Estimation Video</p>
+              <p>Pose Estimation Rendered Video</p>
               <video id="pose-video" controls autoplay muted playsinline loop></video>
             </div>
             <!-- <div class="media-item">
@@ -194,10 +194,11 @@ The template is structured for research papers but can be adapted for any projec
             <div class="trajectory-selector">
               <label for="trajectory-type">3D Viewer Options:</label>
               <select id="trajectory-type">
-                <option value="object">Object Flow</option>
-                <option value="hand">Hand Flow</option>
+                <option value="object">Estimated 6D Object Pose</option>
+                <option value="demo">Generated Clean Robot Demo</option>
               </select>
             </div>
+
             <!-- <p class="figure-caption" style="margin-bottom: 8px; text-align: center;">
               3D Point Cloud &amp; <span id="flow-type-label">Actionable Object Flow</span> from Generated Video
             </p> -->
@@ -231,537 +232,419 @@ The template is structured for research papers but can be adapted for any projec
       </div>
 
       <!-- Start of Ablations/Experiments -->
-      <div class="tagline" id="ablations">Experiments</div>
+      <div class="tagline" id="ablations">Rendered Demonstrations</div>
       <!-- Example Experiment Gallery -->
       <div class="video-gallery-section" id="gallery-section-experiments">
         <div class="experiments-container" style="max-width: 1400px; margin: 0 auto;">
 
           <!-- Experiment Tabs -->
           <div class="experiment-tabs" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
-            <button class="exp-tab active" onclick="showExperiment('exp_stacking')">Block Stacking (3 Steps)</button>
-            <button class="exp-tab" onclick="showExperiment('exp_sorting')">Color Sorting (3 Steps)</button>
-            <button class="exp-tab" onclick="showExperiment('exp_search')">Hidden Object Search (3 Steps)</button>
-            <button class="exp-tab" onclick="showExperiment('exp_fmb')">FMB (4 Steps)</button>
-            <button class="exp-tab" onclick="showExperiment('exp_fmb_variant')">FMB Variant (5 Steps)</button>
+            <button class="exp-tab " onclick="showExperiment('exp_attach')"> Attach </button>
+            <button class="exp-tab" onclick="showExperiment('exp_drum')"> Drum </button>
+            <button class="exp-tab" onclick="showExperiment('exp_place')"> Place </button>
+            <button class="exp-tab active" onclick="showExperiment('exp_pour')"> Pour </button>
+            <button class="exp-tab" onclick="showExperiment('exp_stack')"> Stack </button>
+            <button class="exp-tab" onclick="showExperiment('exp_sweep')"> Sweep </button>
           </div>
 
 
-          <!-- Experiment 1: Stacking (3 Steps) -->
-          <div id="exp_stacking" class="experiment-content">
-            <div class="step-row header"
-              style="display: flex; gap: 10px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; font-weight: bold; text-align: center;">
-              <div class="step-col" style="width: 85px; min-width: 85px; flex-shrink: 0;"></div>
-              <div class="asset-col" style="flex: 1;">Observation</div>
-              <div class="asset-col" style="flex: 1;">Generation</div>
-              <div class="asset-col" style="flex: 1;"><button class="flow-header-btn active" data-flow-type="object"
-                  onclick="setGlobalFlowType('object')">Object Flow</button> <button class="flow-header-btn"
-                  data-flow-type="hand" onclick="setGlobalFlowType('hand')">Hand Flow</button></div>
-              <div class="asset-col" style="flex: 1;">Execution (1x Speed)</div>
+          <div class="gallery-caption-container">
+            <p class="figure-caption gallery-caption">
+              <b>Note: To ensure a smooth, judder-free viewing experience, we do not introduce variations across frames within the same demo here.</b>
+            </p>
+            <br><br>
+          </div>
+
+          
+          <div id="exp_attach" class="experiment-content">
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Front View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000000_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000001_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000002_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000003_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000004_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
             </div>
             <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 1
+              <div class="step-label">Side View
               </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/block_stacking/step_1/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/block_stacking/step_1/step_1.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/block_stacking/step_1/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/block_stacking/step_1/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/block_stacking/step_1/exe_step_1.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 2
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/block_stacking/step_2/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/block_stacking/step_2/step_2.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/block_stacking/step_2/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/block_stacking/step_2/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/block_stacking/step_2/exe_step_2.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 3
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/block_stacking/step_3/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/block_stacking/step_3/step_3.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/block_stacking/step_3/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/block_stacking/step_3/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/block_stacking/step_3/exe_step3.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000000_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000001_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000002_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000003_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/000004_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
             </div>
           </div>
 
-          <!-- Experiment 2: Sorting (3 Steps) -->
-          <div id="exp_sorting" class="experiment-content" style="display:none;">
-
-            <div class="step-row header"
-              style="display: flex; gap: 10px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; font-weight: bold; text-align: center;">
-              <div class="step-col" style="width: 85px; min-width: 85px; flex-shrink: 0;"></div>
-              <div class="asset-col" style="flex: 1;">Observation</div>
-              <div class="asset-col" style="flex: 1;">Generation</div>
-              <div class="asset-col" style="flex: 1;"><button class="flow-header-btn active" data-flow-type="object"
-                  onclick="setGlobalFlowType('object')">Object Flow</button> <button class="flow-header-btn"
-                  data-flow-type="hand" onclick="setGlobalFlowType('hand')">Hand Flow</button></div>
-              <div class="asset-col" style="flex: 1;">Execution (1x Speed)</div>
+        
+          <div id="exp_drum" class="experiment-content">
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Front View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000000_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000001_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000002_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000003_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000004_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
             </div>
             <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 1
+              <div class="step-label">Side View
               </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/color_sorting/step_1/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/color_sorting/step_1/step_1.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/color_sorting/step_1/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/color_sorting/step_1/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/color_sorting/step_1/exe_step1.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 2
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/color_sorting/step_2/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/color_sorting/step_2/step_2.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/color_sorting/step_2/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/color_sorting/step_2/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/color_sorting/step_2/exe_step2.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 3
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/color_sorting/step_3/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/color_sorting/step_3/step_3.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/color_sorting/step_3/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/color_sorting/step_3/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/color_sorting/step_3/exe_step3.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000000_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000001_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000002_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000003_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/000004_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
             </div>
           </div>
 
-          <!-- Experiment 3: Search (3 Steps) -->
-          <div id="exp_search" class="experiment-content" style="display:none;">
-
-            <div class="step-row header"
-              style="display: flex; gap: 10px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; font-weight: bold; text-align: center;">
-              <div class="step-col" style="width: 85px; min-width: 85px; flex-shrink: 0;"></div>
-              <div class="asset-col" style="flex: 1;">Observation</div>
-              <div class="asset-col" style="flex: 1;">Generation</div>
-              <div class="asset-col" style="flex: 1;"><button class="flow-header-btn active" data-flow-type="object"
-                  onclick="setGlobalFlowType('object')">Object Flow</button> <button class="flow-header-btn"
-                  data-flow-type="hand" onclick="setGlobalFlowType('hand')">Hand Flow</button></div>
-              <div class="asset-col" style="flex: 1;">Execution (1x Speed)</div>
+        
+        <div id="exp_place" class="experiment-content">
+          <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+            <div class="step-label">Front View
             </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 1
-              </div>
-              <div class="asset-col" style="flex: 1; position: relative;">
-                <img id="img_search_step1" src="assets/mp4/hidden_object_search/step_1/start_front_view.png"
-                  data-front="assets/mp4/hidden_object_search/step_1/start_front_view.png"
-                  data-side="assets/mp4/hidden_object_search/step_1/start.png" style="width: 100%; border-radius: 8px;">
-                <div class="view-toggle">
-                  <button class="active" onclick="switchImgView('img_search_step1', 'front')">Front View</button>
-                  <button onclick="switchImgView('img_search_step1', 'side')">Side View</button>
-                </div>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/hidden_object_search/step_1/step_1.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/hidden_object_search/step_1/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/hidden_object_search/step_1/hand_flow_video.mp4" class="flow-img hand-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;">
-                <div class="video-wrapper">
-                  <video id="vid_search_step1" src="assets/mp4/hidden_object_search/step_1/camera0_front.mp4"
-                    data-front="assets/mp4/hidden_object_search/step_1/camera0_front.mp4"
-                    data-side="assets/mp4/hidden_object_search/step_1/exe_step_1.mp4" controls autoplay muted
-                    playsinline loop style="width: 100%; border-radius: 8px; display: block;">
-                  </video>
-                  <div class="view-toggle">
-                    <button class="active" onclick="switchView('vid_search_step1', 'front')">Front View</button>
-                    <button onclick="switchView('vid_search_step1', 'side')">Side View</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 2
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/hidden_object_search/step_2/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/hidden_object_search/step_2/step_2.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/hidden_object_search/step_2/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/hidden_object_search/step_2/hand_flow_video.mp4" class="flow-img hand-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;">
-                <div class="video-wrapper">
-                  <video id="vid_search_step2" src="assets/mp4/hidden_object_search/step_2/camera0_front.mp4"
-                    data-front="assets/mp4/hidden_object_search/step_2/camera0_front.mp4"
-                    data-side="assets/mp4/hidden_object_search/step_2/exe_step_2.mp4" controls autoplay muted
-                    playsinline loop style="width: 100%; border-radius: 8px; display: block;">
-                  </video>
-                  <div class="view-toggle">
-                    <button class="active" onclick="switchView('vid_search_step2', 'front')">Front View</button>
-                    <button onclick="switchView('vid_search_step2', 'side')">Side View</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 3
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/hidden_object_search/step_3/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/hidden_object_search/step_3/step_3.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/hidden_object_search/step_3/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/hidden_object_search/step_3/hand_flow_video.mp4" class="flow-img hand-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;">
-                <div class="video-wrapper">
-                  <video id="vid_search_step3" src="assets/mp4/hidden_object_search/step_3/camera0_front.mp4"
-                    data-front="assets/mp4/hidden_object_search/step_3/camera0_front.mp4"
-                    data-side="assets/mp4/hidden_object_search/step_3/exe_step3.mp4" controls autoplay muted playsinline
-                    loop style="width: 100%; border-radius: 8px; display: block;">
-                  </video>
-                  <div class="view-toggle">
-                    <button class="active" onclick="switchView('vid_search_step3', 'front')">Front View</button>
-                    <button onclick="switchView('vid_search_step3', 'side')">Side View</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000000_0.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000001_0.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000002_0.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000003_0.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000004_0.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
           </div>
-
-          <!-- Experiment 4: FMB (4 Steps) -->
-          <div id="exp_fmb" class="experiment-content" style="display:none;">
-
-            <div class="step-row header"
-              style="display: flex; gap: 10px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; font-weight: bold; text-align: center;">
-              <div class="step-col" style="width: 85px; min-width: 85px; flex-shrink: 0;"></div>
-              <div class="asset-col" style="flex: 1;">Observation</div>
-              <div class="asset-col" style="flex: 1;">Generation</div>
-              <div class="asset-col" style="flex: 1;"><button class="flow-header-btn active" data-flow-type="object"
-                  onclick="setGlobalFlowType('object')">Object Flow</button> <button class="flow-header-btn"
-                  data-flow-type="hand" onclick="setGlobalFlowType('hand')">Hand Flow</button></div>
-              <div class="asset-col" style="flex: 1;">Execution (1x Speed)</div>
+          <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+            <div class="step-label">Side View
             </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 1
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_real/step_1/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_1/rgb_video_16fps.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_real/step_1/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_real/step_1/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_1/camera0_1.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 2
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_real/step_2/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_2/rgb_video_16fps.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_real/step_2/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_real/step_2/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_2/camera0_2.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 3
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_real/step_3/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_3/rgb_video_16fps.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_real/step_3/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_real/step_3/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_3/camera0_3.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 4
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_real/step_4/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_4/rgb_video_16fps.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_real/step_4/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_real/step_4/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_real/step_4/camera0_4.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000000_1.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000001_1.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000002_1.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000003_1.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/000004_1.mp4" controls
+                autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
           </div>
-
-          <!-- Experiment 5: FMB Variant (5 Steps) -->
-          <div id="exp_fmb_variant" class="experiment-content" style="display:none;">
-
-            <div class="step-row header"
-              style="display: flex; gap: 10px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; font-weight: bold; text-align: center;">
-              <div class="step-col" style="width: 85px; min-width: 85px; flex-shrink: 0;"></div>
-              <div class="asset-col" style="flex: 1;">Observation</div>
-              <div class="asset-col" style="flex: 1;">Generation</div>
-              <div class="asset-col" style="flex: 1;"><button class="flow-header-btn active" data-flow-type="object"
-                  onclick="setGlobalFlowType('object')">Object Flow</button> <button class="flow-header-btn"
-                  data-flow-type="hand" onclick="setGlobalFlowType('hand')">Hand Flow</button></div>
-              <div class="asset-col" style="flex: 1;">Execution (1x Speed)</div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 1
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_fake/step_1/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_1/rgb_video_16fps_1.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_fake/step_1/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_fake/step_1/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_1/camera0_1.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 2
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_fake/step_2/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_2/rgb_video_16fps_2.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_fake/step_2/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_fake/step_2/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_2/camera0_2.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 3
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_fake/step_3/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_3/rgb_video_16fps_3.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_fake/step_3/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_fake/step_3/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_3/camera0_3.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label">Step 4
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_fake/step_4/start.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_4/rgb_video_16fps_4.mp4"
-                  controls autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_fake/step_4/object_flow_video.mp4" class="flow-img object-flow" controls
-                  autoplay muted playsinline loop style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_fake/step_4/hand_flow_video.mp4" class="flow-img hand-flow" controls autoplay
-                  muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/fmb_fake/step_4/camera0_4.mp4" controls
-                  autoplay muted playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-            </div>
-            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-              <div class="step-label" style="font-size: 12px;">Step 4<br>Recovery
-              </div>
-              <div class="asset-col" style="flex: 1;"><img src="assets/mp4/fmb_fake/step_4_recovery/start_clean.png"
-                  style="width: 100%; border-radius: 8px;"></div>
-              <div class="asset-col" style="flex: 1;"><video
-                  src="assets/mp4/fmb_fake/step_4_recovery/rgb_video_16fps_4_recovery.mp4" controls autoplay muted
-                  playsinline loop style="width: 100%; border-radius: 8px;"></video></div>
-              <div class="asset-col flow-col" style="flex: 1;">
-                <video src="assets/mp4/fmb_fake/step_4_recovery/object_flow_video.mp4" class="flow-img object-flow"
-                  controls autoplay muted playsinline loop
-                  style="display:block; width: 100%; border-radius: 8px;"></video>
-                <video src="assets/mp4/fmb_fake/step_4_recovery/hand_flow_video.mp4" class="flow-img hand-flow" controls
-                  autoplay muted playsinline loop style="display:none; width: 100%; border-radius: 8px;"></video>
-              </div>
-              <div class="asset-col" style="flex: 1;">
-                <div class="video-wrapper">
-                  <video id="vid_fmb_variant_step5" src="assets/mp4/fmb_fake/step_4_recovery/execution_front_view.mp4"
-                    data-front="assets/mp4/fmb_fake/step_4_recovery/execution_front_view.mp4"
-                    data-side="assets/mp4/fmb_fake/step_4_recovery/execution_side_view.mp4" controls autoplay muted
-                    playsinline loop style="width: 100%; border-radius: 8px; display: block;">
-                  </video>
-                  <div class="view-toggle">
-                    <button class="active" onclick="switchView('vid_fmb_variant_step5', 'front')">Front View</button>
-                    <button onclick="switchView('vid_fmb_variant_step5', 'side')">Side View</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
-        <div class="gallery-caption-container">
-          <p class="figure-caption gallery-caption">
-            <b>Multi-Step Experiment Rollouts:</b> We demonstrate NovaPlan on diverse long-horizon tasks. Use the tabs
-            to
-            view
-            different experiments and the toggle to inspect object vs. hand flow.
-          </p>
-        </div>
-        <!-- End of Ablations -->
 
+        
+          <div id="exp_pour" class="experiment-content">
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Front View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000000_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000001_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000002_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000003_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000004_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            </div>
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Side View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000000_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000001_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000002_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000003_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/000004_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            </div>
+        </div>
+
+        
+          <div id="exp_stack" class="experiment-content">
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Front View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000000_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000001_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000002_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000003_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000004_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            </div>
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Side View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000000_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000001_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000002_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000003_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/000004_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            </div>
+        </div>
+
+        
+          <div id="exp_sweep" class="experiment-content">
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Front View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000000_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000001_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000002_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000003_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000004_0.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            </div>
+            <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+              <div class="step-label">Side View
+              </div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000000_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000001_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000002_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000003_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+              <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/000004_1.mp4" controls
+                  autoplay muted playsinline loop style="width: 80%; border-radius: 2px;"></video></div>
+            </div>
+        </div>
+
+
+          </div>
       </div>
 
-      <div class="tagline" id="experiment-results">Quantitative Results</div>
-
-      <!-- Video Gallery Section - Experiment Results -->
-      <div class="video-gallery-section" id="gallery-section-results">
-        <div class="video-gallery-container">
-          <div class="video-gallery" id="results">
-            <img class="gallery-video" src="assets/img/multi_step.png" alt="Quantitative Results">
+      
+      <div class="tagline" id="experiment-results">Cross-domain Inference Results</div>
+      
+          <div class="step-row header"
+            style="display: flex; gap: 10px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; font-weight: bold; text-align: center;">
+            <div class="step-col" style="width: 60px; min-width: 50px; flex-shrink: 0;"></div>
+            <div class="asset-col" style="flex: 1;">Attach</div>
+            <div class="asset-col" style="flex: 1;">Drum</div>
+            <div class="asset-col" style="flex: 1;">Place</div>
+            <div class="asset-col" style="flex: 1;">Pour</div>
+            <div class="asset-col" style="flex: 1;">Stack</div>
+            <div class="asset-col" style="flex: 1;">Sweep</div>
           </div>
-        </div>
-        <div class="gallery-caption-container">
-          <p class="figure-caption gallery-caption">
-            <b>Quantitative Results:</b> NovaPlan achieves the highest long-horizon success rate on all three
-            multi-step tasks, i.e., <b>Four-layer Block Stacking</b>, <b>Color Sorting</b>, and <b>Hidden Object
-              Search</b>, outperforming both the leading VLA method (π<sub>0.5</sub>) and VLM-based planning method
-            (MOKA). By leveraging both object and hand flows for
-            stability and non-prehensile recovery, NovaPlan demonstrates stable short-horizon task execution and
-            robust
-            recovery capabilities, maintaining strong per-step performance even as task complexity increases. For fair
-            comparison, all compared methods (marked with <b>⁺</b>) are provided with an oracle high-level plan.
-          </p>
-        </div>
-      </div>
-
-      <div class="tagline" id="failure-modes">Failure Modes</div>
-
-      <!-- Failure Modes Gallery -->
-      <div class="video-gallery-section" id="gallery-section-failure">
-        <div class="video-gallery-container">
-          <div class="video-gallery" id="failure">
-            <div class="gallery-item">
-              <video class="gallery-video" src="assets/mp4/failure_case/video_generation_failure.mp4" controls autoplay
-                muted playsinline loop style="width: 100%; display: block;"></video>
-              <div class="r2s-video-caption">Failure Mode 1: Video Generation Failure</div>
-            </div>
-            <div class="gallery-item">
-              <video class="gallery-video" src="assets/mp4/failure_case/tapip3d_tracking_failure.mp4" controls autoplay
-                muted playsinline loop style="width: 100%; display: block;"></video>
-              <div class="r2s-video-caption">Failure Mode 2: Object Tracking Failure</div>
-            </div>
-            <div class="gallery-item">
-              <video class="gallery-video" src="assets/mp4/failure_case/hand_tracking_failure.mp4" controls autoplay
-                muted playsinline loop style="width: 100%; display: block;"></video>
-              <div class="r2s-video-caption">Failure Mode 3: Hand Tracking Failure</div>
-            </div>
-            <div class="gallery-item">
-              <video class="gallery-video" src="assets/mp4/failure_case/execution_failure.mp4" controls autoplay muted
-                playsinline loop style="width: 100%; display: block;"></video>
-              <div class="r2s-video-caption">Failure Mode 4: Execution Failure</div>
-            </div>
-            <div class="gallery-item">
-              <img class="gallery-video" src="assets/mp4/failure_case/reorientation_failure.png"
-                style="width: 100%; display: block;" />
-              <div class="r2s-video-caption">Failure Mode 5: Inability to Reorient</div>
-            </div>
+      
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="step-label">Simluation
           </div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/simulation_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/simulation_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/simulation_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/simulation_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/simulation_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/simulation_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
         </div>
-        <div class="gallery-caption-container">
-          <div class="gallery-nav-controls">
-            <button class="gallery-nav left" id="scrollLeftBtnfailure"
-              onclick="document.querySelector('#gallery-section-failure .video-gallery-container').scrollBy({left: -350, behavior: 'smooth'})">&lt;</button>
-            <button class="gallery-nav right" id="scrollRightBtnfailure"
-              onclick="document.querySelector('#gallery-section-failure .video-gallery-container').scrollBy({left: 350, behavior: 'smooth'})">&gt;</button>
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="step-label">Real-world
           </div>
-          <p class="figure-caption gallery-caption">
-            <b>Failure Modes in Different Modules:</b> We identify five failure modes across the NovaPlan
-            pipeline: <b>(1) Video Generation Failure:</b> The generated video does not follow the given action
-            commands. <b>(2) Object Tracking Failure:</b> TAPIP3D fails to robustly track the object, leading to
-            incorrect object flow extraction. <b>(3) Hand Tracking Failure:</b> HaMeR fails to robustly track the
-            hand, leading to incorrect hand flow extraction. <b>(4) Execution Failure:</b> Inaccurate flow estimation
-            leads to failed execution. <b>(5) Inability to Reorient:</b> Our existing regrasp and non-prehensile
-            poking mechanisms cannot recover the end state of the green block, as it requires reorientation which our
-            system cannot handle.
-          </p>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/attach/real_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/drum/real_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/place/real_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/pour/real_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/stack/real_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/sweep/real_eval.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
         </div>
-      </div>
+
+        
+      
+      <div class="tagline" id="experiment-results">More Pose Estimation Results</div>
+      
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/000.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/001.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/002.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/003.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/004.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/005.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/006.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/007.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/008.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/009.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/010.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/011.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/012.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/013.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/014.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/015.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/016.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/017.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/018.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/019.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+        
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/020.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/021.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/022.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/023.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/024.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/025.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/026.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/027.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/028.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/029.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/030.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/031.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/032.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/033.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/034.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+
+        
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/035.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/036.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/037.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/038.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/039.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/040.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/041.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/042.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/043.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/044.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+        
+        <div class="step-row" style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/045.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/046.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/047.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/048.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+          <div class="asset-col" style="flex: 1;"><video src="assets/mp4/obj_all/049.mp4" controls
+               muted playsinline loop style="width: 100%; border-radius: 2px;"></video></div>
+        </div>
+
+
 
       <!-- End of main content -->
     </main>
     <footer class="footer">Some website materials are adapted from <a
+        href="https://nova-plan.github.io/">NovaPlan</a>,<a
         href="https://novaflow-autonomous-manipulation.github.io/">NovaFlow</a>, <a
         href="https://relic-locoman.rai-inst.com/">ReLIC</a>, <a href="https://www.videomimic.net/">VideoMimic</a>, <a
         href="https://transic-robot.github.io/">TRANSIC</a> and <a href="https://viser.studio/main/">Viser</a>
@@ -775,6 +658,7 @@ The template is structured for research papers but can be adapted for any projec
   <script src="assets/js/scroll_button.js"></script>
   <script src="assets/js/task-switcher.js"></script>
   <script src="assets/js/gallery-switcher-v2.js?v=2"></script>
+  <script src="assets/js/intersection-observer-autoplay.js"></script>
 </body>
 
 </html>
